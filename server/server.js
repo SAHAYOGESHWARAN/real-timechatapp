@@ -36,6 +36,12 @@ io.on('connection', (socket) => {
   });
 });
 
+
+const messageRoutes = require('./routes/messageRoutes');
+
+// Before the socket.io setup, add this line
+app.use('/api/messages', messageRoutes);
+
 // Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
