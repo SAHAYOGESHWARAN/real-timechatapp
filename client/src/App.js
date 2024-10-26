@@ -32,3 +32,19 @@ function App() {
 }
 
 export default App;
+import { useContext } from 'react';
+import { AuthContext } from './context/AuthContext';
+import Chat from './components/Chat';
+import Login from './pages/Login';
+
+function App() {
+  const { user } = useContext(AuthContext);
+
+  return (
+    <div className="App">
+      {user ? <Chat /> : <Login />}
+    </div>
+  );
+}
+
+export default App;
