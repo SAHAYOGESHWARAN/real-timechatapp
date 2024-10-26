@@ -1,32 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Emoji } from 'react-emoji-render';
 
 const Chat = ({ messages, socket }) => {
-  const [message, setMessage] = useState('');
+  const [messageList, setMessageList] = useState(messages);
 
-  const sendMessage = () => {
-    if (message) {
-      const msg = { sender: "User", content: message };
-      socket.emit('sendMessage', msg);
-      setMessage('');
+  useEffect(() => {
+    // Check if notifications are supported and request permission
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notification");
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission();
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // Listen for new messages and show notification
+    socket.on('receiveMessage', (message) => {
+      setMessageList((prevMessages) => [...prevMessages, message]);
+      if (Notification.permission === "granted") {
+        new Notification(`${message.sender} sent a message`, {
+          body: message.content,
+        });
+      }
+    });
+
+    return () => socket.off('receiveMessage');
+  }, [socket]);
 
   return (
     <div>
-      <div className="messages">
-        {messages.map((msg, index) => (
-          <div key={index}>
-            <strong>{msg.sender}: </strong>{msg.content}
-          </div>
-        ))}
-      </div>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={(e) => e.key === 'Enter' ? sendMessage() : null}
-      />
-      <button onClick={sendMessage}>Send</button>
+      {messageList.map((msg, index) => (
+        <div key={index}>
+          <strong>{msg.sender}</strong>: <Emoji text={msg.content} />
+          <span>{new Date(msg.timestamp).toLocaleTimeString()}</span>
+        </div>
+      ))}
     </div>
   );
 };
