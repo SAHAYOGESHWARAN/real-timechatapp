@@ -4,6 +4,8 @@ const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
+const messageRoutes = require('./routes/messageRoutes');
+
 
 const app = express();
 const server = http.createServer(app);
@@ -37,10 +39,9 @@ io.on('connection', (socket) => {
 });
 
 
-const messageRoutes = require('./routes/messageRoutes');
-
-// Before the socket.io setup, add this line
+//socket.io
 app.use('/api/messages', messageRoutes);
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
