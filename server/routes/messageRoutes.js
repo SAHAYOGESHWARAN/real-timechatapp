@@ -2,6 +2,9 @@
 const express = require('express');
 const router = express.Router();
 const Message = require('../models/Message');
+const authenticateToken = require('../middlewares/authMiddleware');
+router.get('/', authenticateToken, async (req, res) => { /* ... */ });
+router.post('/', authenticateToken, async (req, res) => { /* ... */ });
 
 // Get all messages
 router.get('/', async (req, res) => {
