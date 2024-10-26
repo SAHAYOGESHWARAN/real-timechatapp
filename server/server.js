@@ -5,6 +5,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
 const messageRoutes = require('./routes/messageRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 
 const app = express();
@@ -41,6 +42,7 @@ io.on('connection', (socket) => {
 
 //socket.io
 app.use('/api/messages', messageRoutes);
+app.use('/api/auth', authRoutes);
 
 
 // Start server
