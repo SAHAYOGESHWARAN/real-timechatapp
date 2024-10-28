@@ -39,4 +39,20 @@ const Chat = ({ messages, socket }) => {
   );
 };
 
+// Import the correct component from react-emoji-render
+import { Emojione } from 'react-emoji-render';
+
+function Chat() {
+  // Inside your component, use Emojione instead of Emoji
+  return (
+    <div>
+      <Emojione text="Hello! 😄" />
+      {/* Additional chat-related code */}
+    </div>
+  );
+}
+
 export default Chat;
+
+
+

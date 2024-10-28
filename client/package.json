@@ -6,6 +6,19 @@
     "axios": "^1.7.7",
     "react-emoji-render": "^2.0.1",
     "react-router-dom": "^6.27.0",
+    "react-scripts": "^5.0.1",
     "socket.io-client": "^4.8.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
