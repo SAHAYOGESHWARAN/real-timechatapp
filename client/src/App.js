@@ -3,6 +3,7 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import Chat from './components/Chat';
 import Login from './pages/Login';
+import './styles.css';
 import { AuthContext } from './context/AuthContext';
 
 const socket = io('http://localhost:5000'); // Replace with your server URL
