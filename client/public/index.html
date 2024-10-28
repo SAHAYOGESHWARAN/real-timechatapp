@@ -28,13 +28,28 @@
     </div>
 
     <!-- Main App Container -->
-    <div id="app-container">
+    <div id="app-container" style="display:none;">
       <header id="app-header">
         <h1>Real-Time Chat App</h1>
         <button id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <button id="theme-toggle"><i class="fas fa-adjust"></i> Toggle Dark Mode</button>
       </header>
-      
-      <div id="root"></div> <!-- React will mount the app here -->
+
+      <div id="chat-app">
+        <aside id="user-list">
+          <h2>Online Users</h2>
+          <ul id="users"></ul> <!-- User list will populate here -->
+        </aside>
+
+        <main id="chat-container">
+          <div id="root"></div> <!-- React will mount the app here -->
+          <div id="message-input">
+            <input type="text" id="message" placeholder="Type a message..." />
+            <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+          </div>
+          <div id="unread-count">Unread Messages: <span id="count">0</span></div>
+        </main>
+      </div>
 
       <!-- Footer -->
       <footer id="app-footer">
@@ -46,11 +61,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" integrity="sha384-nmCkUBbsRceZOnLuRh8lMtv2U/OdVgnRYNP5EQChKR7v6UPthLg0h7vM9z/e6iT7" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha384-eHxW+kvDjF9+K6M2Ls96KlFwRh6fiInL6ulKiHyt2ZjDbD1EP9P/d67+u6pAGnTW" crossorigin="anonymous"></script>
 
+    <!-- Notification Sound -->
+    <audio id="notification-sound" src="notification.mp3" preload="auto"></audio>
+
     <!-- Loading Script (Example) -->
     <script>
       window.addEventListener('load', () => {
         document.getElementById('loading-screen').style.display = 'none';
         document.getElementById('app-container').style.display = 'block';
+      });
+
+      // Dark mode toggle functionality
+      const themeToggleButton = document.getElementById('theme-toggle');
+      themeToggleButton.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+      });
+
+      // Simulated function to receive messages and update UI (for demonstration)
+      function receiveMessage(message) {
+        // Play notification sound
+        document.getElementById('notification-sound').play();
+
+        // Update unread message count
+        const countElement = document.getElementById('count');
+        countElement.innerText = parseInt(countElement.innerText) + 1;
+
+        // Show a toast notification
+        toastr.info(`${message.sender}: ${message.content}`);
+      }
+
+      // Simulated user list (for demonstration)
+      const users = ['User1', 'User2', 'User3'];
+      const userListElement = document.getElementById('users');
+      users.forEach(user => {
+        const li = document.createElement('li');
+        li.innerText = user;
+        userListElement.appendChild(li);
       });
     </script>
   </body>
