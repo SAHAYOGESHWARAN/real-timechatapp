@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Emoji } from 'react-emoji-render';
+import { Emojione } from 'react-emoji-render'; // Correct import
 
 const Chat = ({ messages, socket }) => {
   const [messageList, setMessageList] = useState(messages);
@@ -31,7 +31,7 @@ const Chat = ({ messages, socket }) => {
     <div>
       {messageList.map((msg, index) => (
         <div key={index}>
-          <strong>{msg.sender}</strong>: <Emoji text={msg.content} />
+          <strong>{msg.sender}</strong>: <Emojione text={msg.content} />
           <span>{new Date(msg.timestamp).toLocaleTimeString()}</span>
         </div>
       ))}
@@ -39,20 +39,4 @@ const Chat = ({ messages, socket }) => {
   );
 };
 
-// Import the correct component from react-emoji-render
-import { Emojione } from 'react-emoji-render';
-
-function Chat() {
-  // Inside your component, use Emojione instead of Emoji
-  return (
-    <div>
-      <Emojione text="Hello! 😄" />
-      {/* Additional chat-related code */}
-    </div>
-  );
-}
-
 export default Chat;
-
-
-
